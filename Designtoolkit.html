@@ -1,0 +1,1377 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Design Toolkit by Thundertechnologyofficiaial</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F3E8FF;--bg2:#EDD9FF;--card:#fff;
+  --b1:#D8B4FE;--b2:#E9D5FF;
+  --acc:#7C3AED;--acc2:#A855F7;
+  --txt:#1E1033;--txt2:#6B4FA0;--txt3:#A78BCA;
+  --dark:#1A0A33;--dark2:#E9D5FF;
+  --ok:#059669;--err:#DC2626;
+  --mono:'DM Mono','Courier New',monospace;
+  --head:'Syne',sans-serif;
+}
+html,body{height:100%;background:var(--bg);font-family:var(--mono);color:var(--txt);font-size:13px}
+button{font-family:var(--mono);cursor:pointer;border:none}
+input,textarea{font-family:var(--mono)}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--b1);border-radius:3px}
+
+/* ── APP SHELL ── */
+#app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* ── HEADER ── */
+#hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 24px;background:var(--card);
+  border-bottom:2px solid var(--b2);flex-shrink:0;
+  box-shadow:0 2px 10px rgba(124,58,237,.08)
+}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{
+  width:32px;height:32px;border-radius:8px;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.4)
+}
+.logo-title{font-family:var(--head);font-size:17px;font-weight:800;color:var(--txt);letter-spacing:-.5px}
+.logo-sub{font-size:9px;color:var(--txt3);letter-spacing:.12em}
+
+/* ── MAIN TABS ── */
+#main-tabs{
+  display:flex;padding:0 24px;background:var(--card);
+  border-bottom:2px solid var(--b2);flex-shrink:0
+}
+.m-tab{
+  padding:11px 20px;font-size:11px;letter-spacing:.07em;
+  text-transform:uppercase;background:transparent;color:var(--txt3);
+  border:none;border-bottom:3px solid transparent;
+  margin-bottom:-2px;transition:all .2s;font-weight:500
+}
+.m-tab:hover{color:var(--acc)}
+.m-tab.act{color:var(--acc);border-bottom-color:var(--acc)}
+.badge{
+  display:inline-block;margin-left:5px;padding:1px 6px;
+  background:var(--acc);color:#fff;border-radius:8px;
+  font-size:9px;vertical-align:middle
+}
+
+/* ── PANELS ── */
+.panel{display:none;flex:1;overflow:hidden;min-height:0}
+.panel.act{display:flex}
+
+/* ── SHARED PILL BUTTON ── */
+.pill{
+  padding:5px 8px;font-size:10px;background:var(--bg);
+  border:1.5px solid var(--b2);border-radius:6px;color:var(--txt2);
+  transition:all .15s;white-space:nowrap;text-align:center;cursor:pointer
+}
+.pill:hover{border-color:var(--acc);color:var(--acc)}
+.pill.act{background:#ede9fe;border-color:var(--acc);color:var(--acc);font-weight:600}
+
+/* ── SECTION LABEL ── */
+.sec-lbl{font-size:9px;letter-spacing:.13em;color:var(--txt3);margin-bottom:6px;font-weight:600;text-transform:uppercase;display:block}
+
+/* ── PILL GROUP LAYOUTS ── */
+.pg2{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.pg3{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.pgf{display:flex;flex-wrap:wrap;gap:4px}
+.pgc{display:flex;flex-direction:column;gap:3px}
+
+/* ── RANGE ROW ── */
+.range-row{display:flex;align-items:center;gap:8px}
+.range-row input[type=range]{flex:1;accent-color:var(--acc);cursor:pointer;height:4px}
+.range-val{min-width:36px;text-align:right;font-size:11px;color:var(--acc);font-weight:700}
+
+/* ── CODE PANEL (right/output columns) ── */
+.code-panel{background:var(--dark);display:flex;flex-direction:column;flex-shrink:0}
+.code-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0
+}
+.code-topbar-lbl{font-size:9px;letter-spacing:.12em;color:var(--txt3)}
+.code-btns{display:flex;gap:5px}
+.cbtn{padding:4px 10px;font-size:10px;border-radius:5px;cursor:pointer;font-family:var(--mono);transition:all .2s;border:none}
+.cbtn-cp{background:#2d1a50;color:#c4b5fd;border:1px solid rgba(124,58,237,.3)}
+.cbtn-cp:hover{background:#3d2a60}
+.cbtn-dl{background:rgba(124,58,237,.2);color:#c4b5fd;border:1px solid rgba(124,58,237,.3)}
+.cbtn-dl:hover{background:rgba(124,58,237,.4)}
+.cbtn-ok{background:rgba(5,150,105,.2);color:#34d399;border:1px solid rgba(52,211,153,.25)}
+.code-scroll{flex:1;overflow-y:auto;padding:14px;font-size:11px;line-height:1.9}
+.code-scroll pre{margin:0;white-space:pre-wrap;word-break:break-all;color:#a090c0}
+/* syntax colors — unique names, no conflicts */
+.sk-kw{color:#c4b5fd}
+.sk-prop{color:#67e8f9}
+.sk-val{color:#fcd34d}
+.sk-dim{color:#555577}
+.code-tips{
+  padding:11px 14px;border-top:1px solid rgba(255,255,255,.05);
+  font-size:10px;color:#4a3a6a;line-height:1.8;flex-shrink:0
+}
+.code-tips strong{color:#7c6aaa;display:block;margin-bottom:3px}
+.code-tips span{color:#8855cc88}
+
+/* ══════════════════════════════
+   PANEL 1 — ANIMATION BUILDER
+══════════════════════════════ */
+#p-anim{flex-direction:row}
+
+/* left sidebar */
+.anim-left{
+  width:252px;flex-shrink:0;background:var(--card);
+  border-right:2px solid var(--b2);display:flex;flex-direction:column;overflow:hidden
+}
+.sub-tabs{display:flex;border-bottom:1px solid var(--b2);flex-shrink:0}
+.sub-tab{
+  flex:1;padding:9px 0;font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;background:transparent;color:var(--txt3);
+  border:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s
+}
+.sub-tab.act{color:var(--acc);border-bottom-color:var(--acc);background:var(--bg)}
+.side-scroll{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:14px}
+.sblk{display:flex;flex-direction:column;gap:5px}
+
+/* center preview */
+.anim-center{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:14px;padding:16px;
+  background:var(--bg);position:relative;overflow:hidden
+}
+.anim-center-bg{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(var(--b2) 1.5px,transparent 1.5px);
+  background-size:24px 24px;opacity:.5
+}
+.top-row{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;z-index:2;position:relative}
+.ctrl-row{display:flex;align-items:center;gap:10px;z-index:2;position:relative;flex-wrap:wrap;justify-content:center}
+.color-wrap{position:relative;width:26px;height:26px}
+.color-wrap input[type=color]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.color-dot{width:26px;height:26px;border-radius:6px;border:2px solid var(--b1);pointer-events:none}
+.preview-box{
+  width:300px;height:200px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;z-index:1;
+  border:2px solid var(--b1);transition:all .4s;flex-shrink:0
+}
+.pv-tag{position:absolute;top:7px;left:10px;font-size:9px;color:var(--txt3);letter-spacing:.1em}
+.pv-info{position:absolute;bottom:7px;right:10px;font-size:9px;color:var(--txt3)}
+/* bg theme helper classes */
+.bg-lt{background:#f5f0ff}
+.bg-dk{background:#110a22}
+.bg-grd{background:linear-gradient(135deg,#1a0a3a,#0a1a3a)}
+.bg-grid{
+  background:var(--bg);
+  background-image:linear-gradient(var(--b2) 1px,transparent 1px),linear-gradient(90deg,var(--b2) 1px,transparent 1px);
+  background-size:26px 26px
+}
+.bg-chess{
+  background:#f5eeff;
+  background-image:
+    linear-gradient(45deg,rgba(124,58,237,.06) 25%,transparent 25%,transparent 75%,rgba(124,58,237,.06) 75%),
+    linear-gradient(45deg,rgba(124,58,237,.06) 25%,transparent 25%,transparent 75%,rgba(124,58,237,.06) 75%);
+  background-size:18px 18px;background-position:0 0,9px 9px
+}
+.replay-btn{
+  padding:8px 24px;font-size:11px;letter-spacing:.1em;
+  background:var(--card);border:1.5px solid var(--b1);
+  border-radius:8px;color:var(--acc);cursor:pointer;transition:all .2s;z-index:1;position:relative
+}
+.replay-btn:hover{background:var(--bg2);border-color:var(--acc)}
+.stat-row{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;z-index:1;position:relative}
+.stat-chip{
+  padding:3px 9px;background:var(--card);border:1.5px solid var(--b2);
+  border-radius:16px;font-size:10px;color:var(--txt2)
+}
+.stat-chip b{color:var(--acc)}
+.anim-right{width:280px;border-left:2px solid var(--b2)}
+
+/* chain items */
+.chain-item{
+  display:flex;align-items:center;gap:7px;padding:7px 8px;
+  background:var(--bg);border:1.5px solid var(--b2);border-radius:8px
+}
+.chain-num{
+  width:18px;height:18px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700
+}
+.chain-info{flex:1}
+.chain-name{color:var(--acc);font-size:11px;font-weight:600}
+.chain-meta{color:var(--txt3);font-size:9px}
+.chain-del{background:none;border:none;color:var(--err);font-size:15px;cursor:pointer;line-height:1;padding:0 2px}
+.chain-add-btn{
+  padding:9px;font-size:11px;width:100%;letter-spacing:.06em;
+  background:linear-gradient(135deg,rgba(124,58,237,.07),rgba(168,85,247,.07));
+  border:1.5px dashed var(--acc);border-radius:8px;color:var(--acc);
+  cursor:pointer;transition:all .2s
+}
+.chain-add-btn:hover{background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(168,85,247,.15))}
+.chain-clr-btn{
+  width:100%;padding:6px;font-size:10px;
+  background:rgba(220,38,38,.07);border:1px solid rgba(220,38,38,.2);
+  border-radius:6px;color:var(--err);cursor:pointer
+}
+.empty-msg{text-align:center;color:var(--txt3);padding:20px 0;font-size:11px;line-height:1.9}
+
+/* ══════════════════════════════
+   PANEL 2 — BUTTON BUILDER
+══════════════════════════════ */
+#p-btn{flex-direction:row}
+.btn-left{
+  width:290px;flex-shrink:0;overflow-y:auto;
+  border-right:2px solid var(--b2);background:var(--card);padding:16px 13px;
+  display:flex;flex-direction:column;gap:14px
+}
+.form-input{
+  width:100%;padding:7px 10px;background:var(--bg);
+  border:1.5px solid var(--b2);border-radius:7px;color:var(--txt);
+  font-size:12px;outline:none;transition:border-color .2s
+}
+.form-input:focus{border-color:var(--acc)}
+.color-ctrl-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.color-ctrl-lbl{font-size:10px;color:var(--txt3);min-width:60px;text-transform:uppercase;letter-spacing:.07em}
+.color-swatch{position:relative;width:30px;height:28px;border-radius:6px;overflow:hidden;border:1.5px solid var(--b1);flex-shrink:0}
+.color-swatch input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.color-swatch-show{width:100%;height:100%;pointer-events:none}
+.hex-input{flex:1;padding:6px 9px;background:var(--bg);border:1.5px solid var(--b2);border-radius:7px;color:var(--txt);font-size:12px;outline:none}
+.btn-center{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:22px;background:var(--bg);position:relative;overflow:hidden;padding:24px
+}
+.btn-center-bg{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(var(--b1) 1.5px,transparent 1.5px);
+  background-size:22px 22px;opacity:.3
+}
+.btn-canvas{
+  width:100%;max-width:460px;min-height:160px;background:var(--card);
+  border:2px solid var(--b2);border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  padding:32px;position:relative;z-index:1;
+  box-shadow:0 4px 20px rgba(124,58,237,.1);flex-direction:column;gap:16px
+}
+.btn-canvas-lbl{position:absolute;top:9px;left:13px;font-size:9px;color:var(--txt3);letter-spacing:.1em}
+.btn-canvas-info{position:absolute;bottom:9px;right:13px;font-size:9px;color:var(--txt3)}
+.states-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;z-index:1}
+.state-item{display:flex;flex-direction:column;align-items:center;gap:7px}
+.state-lbl{font-size:9px;color:var(--txt3);letter-spacing:.08em;text-transform:uppercase}
+.btn-right{width:300px;border-left:2px solid var(--b2)}
+
+/* ══════════════════════════════
+   PANEL 3 — CODE RUNNER
+══════════════════════════════ */
+#p-run{flex-direction:column}
+.runner-bar{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 18px;background:var(--card);
+  border-bottom:2px solid var(--b2);flex-shrink:0;flex-wrap:wrap
+}
+.runner-title{font-family:var(--head);font-size:15px;font-weight:700;color:var(--txt)}
+.run-go-btn{
+  padding:7px 18px;font-size:11px;letter-spacing:.08em;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  border:none;border-radius:8px;color:#fff;cursor:pointer;
+  box-shadow:0 3px 10px rgba(124,58,237,.3);transition:all .2s
+}
+.run-go-btn:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(124,58,237,.4)}
+.run-clear-btn{
+  padding:7px 13px;font-size:11px;background:var(--bg);
+  border:1.5px solid var(--b1);border-radius:8px;color:var(--txt2);cursor:pointer;transition:all .2s
+}
+.run-clear-btn:hover{border-color:var(--err);color:var(--err)}
+.run-flex{flex:1}
+.run-status{
+  padding:4px 12px;font-size:10px;border-radius:16px;
+  background:var(--bg2);border:1.5px solid var(--b1);color:var(--txt3)
+}
+.runner-body{display:flex;flex:1;overflow:hidden;min-height:0}
+.editors-col{display:flex;flex-direction:column;width:50%;border-right:2px solid var(--b2);overflow:hidden}
+.editor-pane{display:flex;flex-direction:column;flex:1;overflow:hidden;border-bottom:1px solid var(--b2)}
+.editor-pane:last-child{border-bottom:none}
+.editor-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 12px;background:var(--card);border-bottom:1px solid var(--b2);flex-shrink:0
+}
+.lang-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.lang-dot{width:9px;height:9px;border-radius:50%}
+.ld-html{background:#f97316}.ld-css{background:#3b82f6}.ld-js{background:#eab308}
+.line-count{font-size:10px;color:var(--txt3)}
+.code-editor{
+  flex:1;resize:none;outline:none;
+  background:var(--dark);color:var(--dark2);
+  font-family:var(--mono);font-size:12px;line-height:1.8;
+  padding:12px;border:none;overflow-y:auto
+}
+.code-editor::placeholder{color:#3a2a5a}
+.preview-col{flex:1;display:flex;flex-direction:column;background:#fff;overflow:hidden}
+.preview-header{
+  display:flex;align-items:center;gap:9px;
+  padding:7px 12px;background:var(--card);
+  border-bottom:1px solid var(--b2);flex-shrink:0
+}
+.mac-dots{display:flex;gap:5px}
+.mac-dot{width:10px;height:10px;border-radius:50%}
+.md-r{background:#ef4444}.md-y{background:#f59e0b}.md-g{background:#22c55e}
+.url-bar{
+  flex:1;padding:5px 11px;background:var(--bg);
+  border:1.5px solid var(--b2);border-radius:16px;font-size:10px;color:var(--txt3)
+}
+#run-frame{flex:1;border:none;width:100%;background:#fff}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- HEADER -->
+<div id="hdr">
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    <div>
+      <div class="logo-title">Design Toolkit by Thundertechnologyofficiaial</div>
+      <div class="logo-sub">ANIMATIONS · BUTTONS · CODE RUNNER</div>
+    </div>
+  </div>
+  <span style="font-size:10px;color:var(--txt3);letter-spacing:.06em">Built for GitHub ✦</span>
+</div>
+
+<!-- MAIN TABS -->
+<div id="main-tabs">
+  <button class="m-tab act" id="mtab-anim" onclick="showTab('anim')">✦ Animation Builder</button>
+  <button class="m-tab" id="mtab-btn"  onclick="showTab('btn')">⬡ Button Builder<span class="badge">NEW</span></button>
+  <button class="m-tab" id="mtab-run"  onclick="showTab('run')">▶ Code Runner<span class="badge">NEW</span></button>
+</div>
+
+<!-- ════════════ PANEL 1 – ANIMATION BUILDER ════════════ -->
+<div id="p-anim" class="panel act">
+
+  <!-- LEFT SIDEBAR -->
+  <div class="anim-left">
+    <div class="sub-tabs">
+      <button class="sub-tab act" id="stab0" onclick="showSub(0)">⚙ Controls</button>
+      <button class="sub-tab"     id="stab1" onclick="showSub(1)">⛓ Chain</button>
+    </div>
+
+    <!-- Controls -->
+    <div id="sub0" class="side-scroll">
+      <div class="sblk">
+        <span class="sec-lbl">Animation Type</span>
+        <div class="pg2" id="anim-grid"></div>
+      </div>
+      <div class="sblk">
+        <span class="sec-lbl">Duration</span>
+        <div class="range-row">
+          <input type="range" id="sl-dur" min="0.1" max="5" step="0.1" value="1" oninput="onSlider()">
+          <span class="range-val" id="lbl-dur">1.0s</span>
+        </div>
+      </div>
+      <div class="sblk">
+        <span class="sec-lbl">Delay</span>
+        <div class="range-row">
+          <input type="range" id="sl-del" min="0" max="3" step="0.1" value="0" oninput="onSlider()">
+          <span class="range-val" id="lbl-del">0.0s</span>
+        </div>
+      </div>
+      <div class="sblk">
+        <span class="sec-lbl">Easing</span>
+        <div class="pgc" id="ease-grid"></div>
+      </div>
+      <div class="sblk">
+        <span class="sec-lbl">Iterations</span>
+        <div class="pgf" id="iter-grid"></div>
+      </div>
+      <div class="sblk">
+        <span class="sec-lbl">Direction</span>
+        <div class="pgf" id="dir-grid"></div>
+      </div>
+      <div class="sblk">
+        <span class="sec-lbl">Fill Mode</span>
+        <div class="pgf" id="fill-grid"></div>
+      </div>
+    </div>
+
+    <!-- Chain -->
+    <div id="sub1" class="side-scroll" style="display:none">
+      <div class="sblk">
+        <span class="sec-lbl">Pick Animation</span>
+        <div class="pg2" id="chain-pick-grid"></div>
+      </div>
+      <div class="sblk">
+        <span class="sec-lbl">Duration</span>
+        <div class="range-row">
+          <input type="range" id="sl-cdur" min="0.1" max="4" step="0.1" value="0.8"
+            oninput="document.getElementById('lbl-cdur').textContent=parseFloat(this.value).toFixed(1)+'s'">
+          <span class="range-val" id="lbl-cdur">0.8s</span>
+        </div>
+      </div>
+      <div class="sblk">
+        <span class="sec-lbl">Delay</span>
+        <div class="range-row">
+          <input type="range" id="sl-cdel" min="0" max="5" step="0.1" value="0"
+            oninput="document.getElementById('lbl-cdel').textContent=parseFloat(this.value).toFixed(1)+'s'">
+          <span class="range-val" id="lbl-cdel">0.0s</span>
+        </div>
+      </div>
+      <div class="sblk">
+        <span class="sec-lbl">Iterations</span>
+        <div class="pgf" id="citer-grid"></div>
+      </div>
+      <button class="chain-add-btn" onclick="chainAdd()">+ ADD TO CHAIN</button>
+      <div id="chain-list"></div>
+    </div>
+  </div>
+
+  <!-- CENTER PREVIEW -->
+  <div class="anim-center">
+    <div class="anim-center-bg"></div>
+
+    <!-- Shape + BG toggle row -->
+    <div class="top-row">
+      <div style="display:flex;gap:4px" id="shape-row"></div>
+      <div style="width:1px;background:var(--b1);margin:0 3px"></div>
+      <div style="display:flex;gap:4px" id="bg-row"></div>
+    </div>
+
+    <!-- Color + size + text row -->
+    <div class="ctrl-row">
+      <span style="font-size:9px;color:var(--txt3)">COLOR A</span>
+      <div class="color-wrap">
+        <input type="color" id="col-a" value="#7C3AED" oninput="onColorChange()">
+        <div class="color-dot" id="dot-a" style="background:#7C3AED"></div>
+      </div>
+      <span style="font-size:9px;color:var(--txt3)">COLOR B</span>
+      <div class="color-wrap">
+        <input type="color" id="col-b" value="#A855F7" oninput="onColorChange()">
+        <div class="color-dot" id="dot-b" style="background:#A855F7"></div>
+      </div>
+      <span style="font-size:9px;color:var(--txt3)">SIZE</span>
+      <input type="range" id="sl-sz" min="0.4" max="2" step="0.05" value="1"
+        style="width:64px;accent-color:var(--acc)"
+        oninput="document.getElementById('lbl-sz').textContent=parseFloat(this.value).toFixed(1)+'x';
+                 document.getElementById('anim-el').style.transform='scale('+this.value+')'">
+      <span id="lbl-sz" style="font-size:10px;color:var(--acc);min-width:28px">1.0x</span>
+      <input type="text" id="custom-txt" value="Animate"
+        style="padding:5px 8px;font-size:11px;background:var(--card);border:1.5px solid var(--b1);
+               border-radius:6px;color:var(--txt);width:90px;outline:none;display:none"
+        oninput="buildPreviewShape()">
+    </div>
+
+    <!-- Preview box -->
+    <div class="preview-box bg-lt" id="preview-box">
+      <span class="pv-tag">PREVIEW</span>
+      <div id="anim-el"><div id="shape-inner"></div></div>
+      <span class="pv-info" id="pv-info">bounce · 1s</span>
+    </div>
+
+    <button class="replay-btn" onclick="animReplay()">↺ REPLAY</button>
+    <div class="stat-row" id="stat-chips"></div>
+  </div>
+
+  <!-- RIGHT CODE OUTPUT -->
+  <div class="anim-right code-panel">
+    <div class="code-topbar">
+      <span class="code-topbar-lbl">Generated CSS</span>
+      <div class="code-btns">
+        <button class="cbtn cbtn-cp" id="btn-copy-anim" onclick="copyAnimCSS()">⎘ COPY</button>
+        <button class="cbtn cbtn-dl" onclick="downloadAnimCSS()">↓ .CSS</button>
+      </div>
+    </div>
+    <div class="code-scroll"><pre id="anim-pre"></pre></div>
+    <div class="code-tips">
+      <strong>TIPS</strong>
+      <div>• <span>will-change:transform</span> for GPU boost</div>
+      <div>• <span>prefers-reduced-motion</span> for a11y</div>
+      <div>• Chains use comma-separated values</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ PANEL 2 – BUTTON BUILDER ════════════ -->
+<div id="p-btn" class="panel">
+  <!-- LEFT CONTROLS -->
+  <div class="btn-left">
+    <div style="font-family:var(--head);font-size:15px;font-weight:700;color:var(--txt)">Button Builder</div>
+    <div style="height:1px;background:var(--b2)"></div>
+
+    <div class="sblk"><span class="sec-lbl">Button Text</span>
+      <input class="form-input" id="b-text" value="Click Me" oninput="renderBtn()">
+    </div>
+    <div class="sblk"><span class="sec-lbl">Style</span><div class="pg3" id="b-style-g"></div></div>
+    <div class="sblk"><span class="sec-lbl">Size</span><div class="pgf" id="b-size-g"></div></div>
+    <div class="sblk"><span class="sec-lbl">Border Radius</span>
+      <div class="range-row">
+        <input type="range" id="b-radius" min="0" max="50" value="10" oninput="renderBtn();document.getElementById('lbl-rad').textContent=this.value+'px'">
+        <span class="range-val" id="lbl-rad">10px</span>
+      </div>
+    </div>
+    <div class="sblk"><span class="sec-lbl">Font Size</span>
+      <div class="range-row">
+        <input type="range" id="b-fsize" min="10" max="24" value="14" oninput="renderBtn();document.getElementById('lbl-fsize').textContent=this.value+'px'">
+        <span class="range-val" id="lbl-fsize">14px</span>
+      </div>
+    </div>
+    <div class="sblk"><span class="sec-lbl">Font Weight</span><div class="pgf" id="b-fw-g"></div></div>
+    <div class="sblk"><span class="sec-lbl">Letter Spacing</span>
+      <div class="range-row">
+        <input type="range" id="b-ls" min="0" max="8" step="0.5" value="0" oninput="renderBtn();document.getElementById('lbl-ls').textContent=parseFloat(this.value).toFixed(1)+'px'">
+        <span class="range-val" id="lbl-ls">0px</span>
+      </div>
+    </div>
+    <div class="sblk"><span class="sec-lbl">Border Width</span>
+      <div class="range-row">
+        <input type="range" id="b-bw" min="0" max="6" value="0" oninput="renderBtn();document.getElementById('lbl-bw').textContent=this.value+'px'">
+        <span class="range-val" id="lbl-bw">0px</span>
+      </div>
+    </div>
+    <div class="sblk"><span class="sec-lbl">Shadow Size</span>
+      <div class="range-row">
+        <input type="range" id="b-shadow" min="0" max="60" value="20" oninput="renderBtn();document.getElementById('lbl-sh').textContent=this.value+'px'">
+        <span class="range-val" id="lbl-sh">20px</span>
+      </div>
+    </div>
+
+    <div class="sblk"><span class="sec-lbl">Colors</span>
+      <div class="color-ctrl-row">
+        <span class="color-ctrl-lbl">Background</span>
+        <div class="color-swatch"><input type="color" id="b-bg-c" value="#7C3AED" oninput="syncBtnColor('bg')"><div class="color-swatch-show" id="b-bg-show" style="background:#7C3AED"></div></div>
+        <input class="hex-input" id="b-bg-h" value="#7C3AED" oninput="syncBtnHex('bg')">
+      </div>
+      <div class="color-ctrl-row">
+        <span class="color-ctrl-lbl">Text Color</span>
+        <div class="color-swatch"><input type="color" id="b-tc-c" value="#FFFFFF" oninput="syncBtnColor('tc')"><div class="color-swatch-show" id="b-tc-show" style="background:#FFFFFF"></div></div>
+        <input class="hex-input" id="b-tc-h" value="#FFFFFF" oninput="syncBtnHex('tc')">
+      </div>
+      <div class="color-ctrl-row">
+        <span class="color-ctrl-lbl">Grad End</span>
+        <div class="color-swatch"><input type="color" id="b-g2-c" value="#A855F7" oninput="syncBtnColor('g2')"><div class="color-swatch-show" id="b-g2-show" style="background:#A855F7"></div></div>
+        <input class="hex-input" id="b-g2-h" value="#A855F7" oninput="syncBtnHex('g2')">
+      </div>
+    </div>
+
+    <div class="sblk"><span class="sec-lbl">Hover Effect</span><div class="pg2" id="b-hov-g"></div></div>
+    <div class="sblk"><span class="sec-lbl">Transition Speed</span><div class="pgf" id="b-tr-g"></div></div>
+    <div class="sblk"><span class="sec-lbl">Width</span><div class="pgf" id="b-wd-g"></div></div>
+    <div class="sblk"><span class="sec-lbl">Icon</span><div class="pgf" id="b-ic-g"></div></div>
+    <div class="sblk"><span class="sec-lbl">Text Transform</span><div class="pgf" id="b-tt-g"></div></div>
+  </div>
+
+  <!-- CENTER PREVIEW -->
+  <div class="btn-center">
+    <div class="btn-center-bg"></div>
+    <div class="btn-canvas" id="btn-canvas">
+      <span class="btn-canvas-lbl">LIVE PREVIEW</span>
+      <div id="btn-live"></div>
+      <span class="btn-canvas-info" id="btn-info"></span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;z-index:1">
+      <span style="font-size:9px;color:var(--txt3);letter-spacing:.08em">STATE PREVIEWS</span>
+      <div class="states-row" id="btn-states"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT CODE OUTPUT -->
+  <div class="btn-right code-panel">
+    <div class="code-topbar">
+      <span class="code-topbar-lbl">HTML + CSS</span>
+      <div class="code-btns">
+        <button class="cbtn cbtn-cp" id="btn-copy-btn" onclick="copyBtnCode()">⎘ COPY</button>
+        <button class="cbtn cbtn-dl" onclick="downloadBtnCode()">↓ .HTML</button>
+      </div>
+    </div>
+    <div class="code-scroll"><pre id="btn-pre"></pre></div>
+    <div class="code-tips">
+      <strong>TIPS</strong>
+      <div>• Add <span>type="button"</span> to prevent submit</div>
+      <div>• Use <span>:focus-visible</span> for keyboard a11y</div>
+      <div>• Test contrast ≥ 4.5:1 for WCAG AA</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ PANEL 3 – CODE RUNNER ════════════ -->
+<div id="p-run" class="panel">
+  <div class="runner-bar">
+    <span class="runner-title">Code Runner</span>
+    <button class="run-go-btn"    onclick="runCode()">▶ Run</button>
+    <button class="run-clear-btn" onclick="clearCode()">✕ Clear</button>
+    <div class="run-flex"></div>
+    <span class="run-status" id="run-status">Ready</span>
+    <button class="cbtn cbtn-dl" style="padding:6px 12px" onclick="downloadRunCode()">↓ Download</button>
+  </div>
+
+  <div class="runner-body">
+    <!-- Editors -->
+    <div class="editors-col">
+      <div class="editor-pane">
+        <div class="editor-header">
+          <span class="lang-label"><span class="lang-dot ld-html"></span>HTML</span>
+          <span class="line-count" id="ln-html">0 lines</span>
+        </div>
+        <textarea class="code-editor" id="ed-html" placeholder="<!-- HTML here -->" spellcheck="false" oninput="countLines('html')"></textarea>
+      </div>
+      <div class="editor-pane">
+        <div class="editor-header">
+          <span class="lang-label"><span class="lang-dot ld-css"></span>CSS</span>
+          <span class="line-count" id="ln-css">0 lines</span>
+        </div>
+        <textarea class="code-editor" id="ed-css" placeholder="/* CSS here */" spellcheck="false" oninput="countLines('css')"></textarea>
+      </div>
+      <div class="editor-pane">
+        <div class="editor-header">
+          <span class="lang-label"><span class="lang-dot ld-js"></span>JavaScript</span>
+          <span class="line-count" id="ln-js">0 lines</span>
+        </div>
+        <textarea class="code-editor" id="ed-js" placeholder="// JS here" spellcheck="false" oninput="countLines('js')"></textarea>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="preview-col">
+      <div class="preview-header">
+        <div class="mac-dots">
+          <div class="mac-dot md-r"></div>
+          <div class="mac-dot md-y"></div>
+          <div class="mac-dot md-g"></div>
+        </div>
+        <div class="url-bar">⊙ &nbsp;Preview Window</div>
+        <button onclick="runCode()" style="padding:5px 11px;font-size:10px;background:var(--acc);border:none;border-radius:6px;color:#fff;cursor:pointer">▶ Run</button>
+      </div>
+      <iframe id="run-frame" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+  </div>
+</div>
+
+</div><!-- #app -->
+<style id="kf-style"></style>
+
+<script>
+// ════════════════════════════════════════════════════
+//  DATA
+// ════════════════════════════════════════════════════
+var ANIMS = {
+  fade:       {l:"Fade In",    c:"aFade",   kf:"@keyframes aFade{0%{opacity:0}100%{opacity:1}}"},
+  fadeOut:    {l:"Fade Out",   c:"aFadeOut",kf:"@keyframes aFadeOut{0%{opacity:1}100%{opacity:0}}"},
+  slideUp:    {l:"Slide Up",   c:"aSlUp",   kf:"@keyframes aSlUp{0%{transform:translateY(60px);opacity:0}100%{transform:translateY(0);opacity:1}}"},
+  slideDown:  {l:"Slide Down", c:"aSlDn",   kf:"@keyframes aSlDn{0%{transform:translateY(-60px);opacity:0}100%{transform:translateY(0);opacity:1}}"},
+  slideLeft:  {l:"Slide Left", c:"aSlLt",   kf:"@keyframes aSlLt{0%{transform:translateX(60px);opacity:0}100%{transform:translateX(0);opacity:1}}"},
+  slideRight: {l:"Slide Right",c:"aSlRt",   kf:"@keyframes aSlRt{0%{transform:translateX(-60px);opacity:0}100%{transform:translateX(0);opacity:1}}"},
+  bounce:     {l:"Bounce",     c:"aBounce", kf:"@keyframes aBounce{0%,100%{transform:translateY(0);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:translateY(-28px);animation-timing-function:cubic-bezier(0,0,.2,1)}}"},
+  spin:       {l:"Spin",       c:"aSpin",   kf:"@keyframes aSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}"},
+  pulse:      {l:"Pulse",      c:"aPulse",  kf:"@keyframes aPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}"},
+  shake:      {l:"Shake",      c:"aShake",  kf:"@keyframes aShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}"},
+  flip:       {l:"Flip",       c:"aFlip",   kf:"@keyframes aFlip{0%{transform:perspective(400px) rotateY(0)}100%{transform:perspective(400px) rotateY(360deg)}}"},
+  zoomIn:     {l:"Zoom In",    c:"aZoom",   kf:"@keyframes aZoom{0%{transform:scale(0.3);opacity:0}100%{transform:scale(1);opacity:1}}"},
+  rubber:     {l:"Rubber",     c:"aRubber", kf:"@keyframes aRubber{0%{transform:scale(1,1)}30%{transform:scale(1.25,.75)}40%{transform:scale(.75,1.25)}50%{transform:scale(1.15,.85)}65%{transform:scale(.95,1.05)}75%{transform:scale(1.05,.95)}100%{transform:scale(1,1)}}"},
+  swing:      {l:"Swing",      c:"aSwing",  kf:"@keyframes aSwing{0%{transform:rotate(0deg);transform-origin:top center}20%{transform:rotate(15deg)}40%{transform:rotate(-10deg)}60%{transform:rotate(5deg)}80%{transform:rotate(-5deg)}100%{transform:rotate(0deg)}}"},
+  jello:      {l:"Jello",      c:"aJello",  kf:"@keyframes aJello{0%,11%,100%{transform:none}22%{transform:skewX(-12.5deg) skewY(-12.5deg)}33%{transform:skewX(6deg) skewY(6deg)}44%{transform:skewX(-3deg) skewY(-3deg)}55%{transform:skewX(1.5deg) skewY(1.5deg)}}"},
+  heartbeat:  {l:"Heartbeat",  c:"aHeart",  kf:"@keyframes aHeart{0%{transform:scale(1)}14%{transform:scale(1.3)}28%{transform:scale(1)}42%{transform:scale(1.3)}70%{transform:scale(1)}}"}
+};
+
+var EASINGS = {
+  "linear":"Linear",
+  "ease":"Ease",
+  "ease-in":"Ease In",
+  "ease-out":"Ease Out",
+  "ease-in-out":"Ease In-Out",
+  "cubic-bezier(0.68,-0.55,0.27,1.55)":"Spring",
+  "cubic-bezier(0.34,1.56,0.64,1)":"Overshoot"
+};
+
+var BG_OPTS = {lt:"Light",dk:"Dark",grd:"Gradient",grid:"Grid",chess:"Checker"};
+var BG_MAP  = {lt:"bg-lt",dk:"bg-dk",grd:"bg-grd",grid:"bg-grid",chess:"bg-chess"};
+
+// Anim state
+var A = {
+  anim:"bounce", dur:1, delay:0, ease:"ease", iter:"infinite",
+  dir:"normal", fill:"both", shape:"box", bg:"lt",
+  chains:[], cpick:"pulse", cpick_iter:"1"
+};
+
+// ════════════════════════════════════════════════════
+//  HELPERS
+// ════════════════════════════════════════════════════
+function xss(s) {
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+// Create a pill button and append to container
+function addPill(container, label, isActive, clickFn) {
+  var b = document.createElement("button");
+  b.className = "pill" + (isActive ? " act" : "");
+  b.textContent = label;
+  b.onclick = clickFn;
+  container.appendChild(b);
+}
+
+// Rebuild a pill group from an options map or array
+function rebuildGroup(elId, opts, activeKey, onSelect) {
+  var el = document.getElementById(elId);
+  el.innerHTML = "";
+  var isArr = Array.isArray(opts);
+  var keys  = isArr ? opts : Object.keys(opts);
+  keys.forEach(function(k) {
+    var lbl = isArr ? k : opts[k];
+    // use closure via IIFE to capture k
+    (function(key, label) {
+      addPill(el, label, activeKey === key, function() {
+        onSelect(key);
+      });
+    })(k, lbl);
+  });
+}
+
+// ════════════════════════════════════════════════════
+//  TAB & SUBTAB SWITCHING
+// ════════════════════════════════════════════════════
+function showTab(id) {
+  ["anim","btn","run"].forEach(function(t) {
+    document.getElementById("mtab-"+t).classList.remove("act");
+    document.getElementById("p-"+t).classList.remove("act");
+  });
+  document.getElementById("mtab-"+id).classList.add("act");
+  document.getElementById("p-"+id).classList.add("act");
+}
+
+function showSub(i) {
+  document.getElementById("sub0").style.display = (i === 0) ? "flex" : "none";
+  document.getElementById("sub1").style.display = (i === 1) ? "flex" : "none";
+  document.getElementById("stab0").className = "sub-tab" + (i === 0 ? " act" : "");
+  document.getElementById("stab1").className = "sub-tab" + (i === 1 ? " act" : "");
+}
+
+// ════════════════════════════════════════════════════
+//  ANIMATION BUILDER
+// ════════════════════════════════════════════════════
+
+function injectKF() {
+  document.getElementById("kf-style").innerHTML =
+    Object.values(ANIMS).map(function(a){ return a.kf; }).join("\n");
+}
+
+function buildAllAnimControls() {
+  // Animation type grid
+  rebuildGroup("anim-grid", Object.keys(ANIMS), A.anim, function(k) {
+    A.anim = k;
+    buildAllAnimControls();
+    animReplay();
+  });
+  // Rename labels in the grid using ANIMS data
+  var ag = document.getElementById("anim-grid");
+  var btns = ag.querySelectorAll(".pill");
+  var keys = Object.keys(ANIMS);
+  btns.forEach(function(b, i) { b.textContent = ANIMS[keys[i]].l; });
+
+  // Easing
+  rebuildGroup("ease-grid", EASINGS, A.ease, function(k) {
+    A.ease = k;
+    buildAllAnimControls();
+    animReplay();
+  });
+
+  // Iterations
+  rebuildGroup("iter-grid", ["1","2","3","infinite"], A.iter, function(k) {
+    A.iter = k;
+    buildAllAnimControls();
+    animReplay();
+  });
+
+  // Direction
+  rebuildGroup("dir-grid", ["normal","reverse","alternate","alternate-reverse"], A.dir, function(k) {
+    A.dir = k;
+    buildAllAnimControls();
+    animReplay();
+  });
+
+  // Fill mode
+  rebuildGroup("fill-grid", ["none","forwards","backwards","both"], A.fill, function(k) {
+    A.fill = k;
+    buildAllAnimControls();
+  });
+
+  // Chain pick
+  rebuildGroup("chain-pick-grid", Object.keys(ANIMS), A.cpick, function(k) {
+    A.cpick = k;
+    buildAllAnimControls();
+  });
+  var cg = document.getElementById("chain-pick-grid");
+  var cbtns = cg.querySelectorAll(".pill");
+  cbtns.forEach(function(b, i) { b.textContent = ANIMS[keys[i]].l; });
+
+  // Chain iterations
+  rebuildGroup("citer-grid", ["1","2","3","infinite"], A.cpick_iter, function(k) {
+    A.cpick_iter = k;
+    buildAllAnimControls();
+  });
+
+  // Shape row
+  rebuildGroup("shape-row", ["box","circle","text","button"], A.shape, function(k) {
+    A.shape = k;
+    buildAllAnimControls();
+    buildPreviewShape();
+    document.getElementById("custom-txt").style.display = (k === "text") ? "inline-block" : "none";
+  });
+
+  // BG row
+  rebuildGroup("bg-row", BG_OPTS, A.bg, function(k) {
+    A.bg = k;
+    buildAllAnimControls();
+    var pb = document.getElementById("preview-box");
+    Object.values(BG_MAP).forEach(function(c){ pb.classList.remove(c); });
+    pb.classList.add(BG_MAP[k]);
+  });
+
+  // Update subtab chain badge
+  var chainCount = A.chains.length;
+  document.getElementById("stab1").textContent = "⛓ Chain" + (chainCount ? " (" + chainCount + ")" : "");
+
+  updateStatChips();
+  buildAnimCodeOutput();
+}
+
+function buildPreviewShape() {
+  var c1 = document.getElementById("col-a").value;
+  var c2 = document.getElementById("col-b").value;
+  var gr = "linear-gradient(135deg," + c1 + "," + c2 + ")";
+  var sh = "0 8px 24px " + c1 + "55";
+  var el = document.getElementById("shape-inner");
+  if (A.shape === "box") {
+    el.innerHTML = '<div style="width:66px;height:66px;background:' + gr + ';border-radius:12px;box-shadow:' + sh + '"></div>';
+  } else if (A.shape === "circle") {
+    el.innerHTML = '<div style="width:68px;height:68px;border-radius:50%;background:' + gr + ';box-shadow:' + sh + '"></div>';
+  } else if (A.shape === "text") {
+    var txt = document.getElementById("custom-txt").value || "Animate";
+    el.innerHTML = '<div style="font-family:Syne,sans-serif;font-size:30px;font-weight:800;'
+      + 'background:linear-gradient(90deg,' + c1 + ',' + c2 + ');-webkit-background-clip:text;'
+      + '-webkit-text-fill-color:transparent;letter-spacing:-1px;white-space:nowrap">' + xss(txt) + '</div>';
+  } else {
+    el.innerHTML = '<div style="padding:11px 24px;border-radius:10px;background:' + gr
+      + ';color:#fff;font-family:DM Mono,monospace;font-size:13px;font-weight:500;box-shadow:' + sh
+      + ';cursor:pointer">Click me</div>';
+  }
+}
+
+function onColorChange() {
+  var c1 = document.getElementById("col-a").value;
+  var c2 = document.getElementById("col-b").value;
+  document.getElementById("dot-a").style.background = c1;
+  document.getElementById("dot-b").style.background = c2;
+  buildPreviewShape();
+  buildAnimCodeOutput();
+}
+
+function onSlider() {
+  A.dur   = parseFloat(document.getElementById("sl-dur").value);
+  A.delay = parseFloat(document.getElementById("sl-del").value);
+  document.getElementById("lbl-dur").textContent = A.dur.toFixed(1) + "s";
+  document.getElementById("lbl-del").textContent = A.delay.toFixed(1) + "s";
+  animReplay();
+}
+
+function applyAnimStyle() {
+  var el = document.getElementById("anim-el");
+  var names = [ANIMS[A.anim].c];
+  var durs  = [A.dur + "s"];
+  var dels  = [A.delay + "s"];
+  var iters = [A.iter];
+  var eas   = [A.ease];
+  A.chains.forEach(function(c) {
+    names.push(ANIMS[c.anim].c);
+    durs.push(c.dur + "s");
+    dels.push(c.del + "s");
+    iters.push(c.iter);
+    eas.push("ease");
+  });
+  el.style.animationName           = names.join(",");
+  el.style.animationDuration       = durs.join(",");
+  el.style.animationDelay          = dels.join(",");
+  el.style.animationTimingFunction = eas.join(",");
+  el.style.animationIterationCount = iters.join(",");
+  el.style.animationDirection      = A.dir;
+  el.style.animationFillMode       = A.fill;
+}
+
+function animReplay() {
+  var el = document.getElementById("anim-el");
+  // Properly restart: set name to none, reflow, restore
+  el.style.animationName = "none";
+  void el.offsetWidth;   // force reflow
+  applyAnimStyle();
+  document.getElementById("pv-info").textContent =
+    ANIMS[A.anim].l + (A.chains.length ? " +" + A.chains.length : "") + " \u00b7 " + A.dur + "s";
+  updateStatChips();
+  buildAnimCodeOutput();
+}
+
+function updateStatChips() {
+  var chips = [
+    ["ANIM", ANIMS[A.anim].l],
+    ["DUR",  A.dur + "s"],
+    ["DEL",  A.delay + "s"],
+    ["EASE", EASINGS[A.ease] || A.ease],
+    ["\u00d7", A.iter]
+  ];
+  var html = chips.map(function(c) {
+    return '<div class="stat-chip">' + c[0] + ': <b>' + c[1] + '</b></div>';
+  }).join("");
+  if (A.chains.length) {
+    html += '<div class="stat-chip" style="background:rgba(124,58,237,.1);border-color:var(--acc)">'
+          + '\u26d3 <b>' + A.chains.length + ' chained</b></div>';
+  }
+  document.getElementById("stat-chips").innerHTML = html;
+}
+
+// ── Chain management ──
+function chainAdd() {
+  var dur = parseFloat(document.getElementById("sl-cdur").value);
+  var del = parseFloat(document.getElementById("sl-cdel").value);
+  A.chains.push({ id: Date.now(), anim: A.cpick, dur: dur, del: del, iter: A.cpick_iter });
+  buildChainList();
+  buildAllAnimControls();
+  animReplay();
+}
+
+function chainRemove(id) {
+  A.chains = A.chains.filter(function(c){ return c.id !== id; });
+  buildChainList();
+  buildAllAnimControls();
+  animReplay();
+}
+
+function chainClear() {
+  A.chains = [];
+  buildChainList();
+  buildAllAnimControls();
+  animReplay();
+}
+
+function buildChainList() {
+  var el = document.getElementById("chain-list");
+  if (!A.chains.length) {
+    el.innerHTML = '<div class="empty-msg">\u26d3<br>No chains yet.<br>Pick an animation above<br>and click <b style="color:var(--acc)">+ ADD TO CHAIN</b></div>';
+    return;
+  }
+  var html = '<div style="display:flex;flex-direction:column;gap:5px;margin-top:6px">';
+  A.chains.forEach(function(c, i) {
+    html += '<div class="chain-item">'
+      + '<div class="chain-num">' + (i+1) + '</div>'
+      + '<div class="chain-info">'
+      + '<div class="chain-name">' + ANIMS[c.anim].l + '</div>'
+      + '<div class="chain-meta">' + c.dur + 's \u00b7 delay ' + c.del + 's \u00b7 \u00d7' + c.iter + '</div>'
+      + '</div>'
+      + '<button class="chain-del" onclick="chainRemove(' + c.id + ')">&#x2715;</button>'
+      + '</div>';
+  });
+  html += '<button class="chain-clr-btn" onclick="chainClear()">CLEAR ALL</button></div>';
+  el.innerHTML = html;
+}
+
+// ── CSS code output ──
+function colorLine(line) {
+  var s = xss(line);
+  if (line.indexOf("@keyframes") === 0 || line.indexOf("/*") === 0 || (line.length > 0 && line[0] === "."))
+    return '<span class="sk-kw">' + s + '</span>';
+  if (line.indexOf("%") !== -1)
+    return '<span class="sk-val">' + s + '</span>';
+  if (line.trim() === "{" || line.trim() === "}")
+    return '<span class="sk-dim">' + s + '</span>';
+  if (line.indexOf(":") !== -1) {
+    var idx = line.indexOf(":");
+    return '<span class="sk-prop">' + xss(line.slice(0,idx)) + '</span>' + xss(line.slice(idx));
+  }
+  return s;
+}
+
+function getAnimCSSText() {
+  var a = ANIMS[A.anim];
+  var seenKF = {};
+  var extraKF = "";
+  A.chains.forEach(function(c) {
+    if (!seenKF[c.anim]) { extraKF += "\n" + ANIMS[c.anim].kf; seenKF[c.anim] = 1; }
+  });
+  var names = [a.c].concat(A.chains.map(function(c){ return ANIMS[c.anim].c; })).join(", ");
+  var durs  = [A.dur+"s"].concat(A.chains.map(function(c){ return c.dur+"s"; })).join(", ");
+  var dels  = [A.delay+"s"].concat(A.chains.map(function(c){ return c.del+"s"; })).join(", ");
+  var iters = [A.iter].concat(A.chains.map(function(c){ return c.iter; })).join(", ");
+  var eas   = [A.ease].concat(A.chains.map(function(){ return "ease"; })).join(", ");
+  var sh = a.c + " " + A.dur + "s " + A.ease + " " + A.delay + "s " + A.iter + " " + A.dir + " " + A.fill;
+  A.chains.forEach(function(c) {
+    sh += ",\n             " + ANIMS[c.anim].c + " " + c.dur + "s ease " + c.del + "s " + c.iter + " normal both";
+  });
+  return "/* Keyframes */\n" + a.kf + extraKF
+    + "\n\n/* Shorthand */\n.element {\n  animation: " + sh + ";\n}"
+    + "\n\n/* Longhand */\n.element {\n"
+    + "  animation-name: " + names + ";\n"
+    + "  animation-duration: " + durs + ";\n"
+    + "  animation-timing-function: " + eas + ";\n"
+    + "  animation-delay: " + dels + ";\n"
+    + "  animation-iteration-count: " + iters + ";\n"
+    + "  animation-direction: " + A.dir + ";\n"
+    + "  animation-fill-mode: " + A.fill + ";\n}";
+}
+
+function buildAnimCodeOutput() {
+  var txt = getAnimCSSText();
+  document.getElementById("anim-pre").innerHTML =
+    txt.split("\n").map(colorLine).join("\n");
+}
+
+function copyAnimCSS() {
+  navigator.clipboard.writeText(getAnimCSSText()).catch(function(){});
+  var b = document.getElementById("btn-copy-anim");
+  b.textContent = "\u2713 COPIED"; b.className = "cbtn cbtn-ok";
+  setTimeout(function(){ b.textContent = "\u2398 COPY"; b.className = "cbtn cbtn-cp"; }, 2000);
+}
+
+function downloadAnimCSS() {
+  var a = document.createElement("a");
+  a.href = "data:text/css;charset=utf-8," + encodeURIComponent(getAnimCSSText());
+  a.download = A.anim + "-animation.css";
+  a.click();
+}
+
+// ════════════════════════════════════════════════════
+//  BUTTON BUILDER
+// ════════════════════════════════════════════════════
+
+// Button state — all options stored here
+var B = {
+  style:"gradient", size:"md", fw:"600",
+  hov:"lift", tr:"0.2s", wd:"auto", ic:"none", tt:"none"
+};
+
+function buildAllBtnControls() {
+  rebuildGroup("b-style-g",
+    {solid:"Solid",outline:"Outline",ghost:"Ghost",gradient:"Gradient",glass:"Glass",soft:"Soft",neon:"Neon","3d":"3D"},
+    B.style, function(k){ B.style = k; buildAllBtnControls(); renderBtn(); });
+
+  rebuildGroup("b-size-g", {sm:"SM",md:"MD",lg:"LG",xl:"XL"},
+    B.size, function(k){ B.size = k; buildAllBtnControls(); renderBtn(); });
+
+  rebuildGroup("b-fw-g", ["300","400","500","600","700","800"],
+    B.fw, function(k){ B.fw = k; buildAllBtnControls(); renderBtn(); });
+
+  rebuildGroup("b-hov-g",
+    {lift:"Lift",glow:"Glow",scale:"Scale",pulse:"Pulse",invert:"Invert",none:"None"},
+    B.hov, function(k){ B.hov = k; buildAllBtnControls(); renderBtn(); });
+
+  rebuildGroup("b-tr-g",
+    {"0.1s":"Fast","0.2s":"Normal","0.4s":"Slow","0s":"Instant"},
+    B.tr, function(k){ B.tr = k; buildAllBtnControls(); renderBtn(); });
+
+  rebuildGroup("b-wd-g",
+    {auto:"Auto",full:"Full","200px":"200","300px":"300"},
+    B.wd, function(k){ B.wd = k; buildAllBtnControls(); renderBtn(); });
+
+  rebuildGroup("b-ic-g",
+    {none:"None","\u2192":"\u2192","\u2756":"\u2756","\u25b6":"\u25b6","\u2605":"\u2605","\u26a1":"\u26a1"},
+    B.ic, function(k){ B.ic = k; buildAllBtnControls(); renderBtn(); });
+
+  rebuildGroup("b-tt-g",
+    {none:"Default",uppercase:"UPPER",lowercase:"lower",capitalize:"Title"},
+    B.tt, function(k){ B.tt = k; buildAllBtnControls(); renderBtn(); });
+}
+
+function syncBtnColor(id) {
+  var val = document.getElementById("b-"+id+"-c").value;
+  document.getElementById("b-"+id+"-h").value = val;
+  document.getElementById("b-"+id+"-show").style.background = val;
+  renderBtn();
+}
+
+function syncBtnHex(id) {
+  var val = document.getElementById("b-"+id+"-h").value;
+  if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+    document.getElementById("b-"+id+"-c").value = val;
+    document.getElementById("b-"+id+"-show").style.background = val;
+    renderBtn();
+  }
+}
+
+function rgba(hex, a) {
+  var r = parseInt(hex.slice(1,3),16);
+  var g = parseInt(hex.slice(3,5),16);
+  var b = parseInt(hex.slice(5,7),16);
+  return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+}
+
+function getBtnVals() {
+  return {
+    bg:     document.getElementById("b-bg-c").value || "#7C3AED",
+    tc:     document.getElementById("b-tc-c").value || "#FFFFFF",
+    g2:     document.getElementById("b-g2-c").value || "#A855F7",
+    radius: document.getElementById("b-radius").value || "10",
+    fsize:  document.getElementById("b-fsize").value || "14",
+    ls:     document.getElementById("b-ls").value || "0",
+    bw:     document.getElementById("b-bw").value || "0",
+    shadow: document.getElementById("b-shadow").value || "20"
+  };
+}
+
+function buildBtnInlineStyle(v) {
+  var bg = v.bg, tc = v.tc, g2 = v.g2;
+  var bw = parseInt(v.bw), sh = parseInt(v.shadow);
+  var bgS, brS, tcS, extra = "", hov = "";
+
+  if (B.style === "solid") {
+    bgS = "background:" + bg; brS = "border:" + bw + "px solid " + bg; tcS = "color:" + tc;
+  } else if (B.style === "outline") {
+    bgS = "background:transparent"; brS = "border:" + Math.max(2,bw) + "px solid " + bg; tcS = "color:" + bg;
+  } else if (B.style === "ghost") {
+    bgS = "background:" + rgba(bg,.1); brS = "border:none"; tcS = "color:" + bg;
+  } else if (B.style === "gradient") {
+    bgS = "background:linear-gradient(135deg," + bg + "," + g2 + ")"; brS = "border:none"; tcS = "color:" + tc;
+  } else if (B.style === "glass") {
+    bgS = "background:" + rgba(bg,.15) + ";backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)";
+    brS = "border:1px solid " + rgba(bg,.3); tcS = "color:" + tc;
+  } else if (B.style === "soft") {
+    bgS = "background:" + rgba(bg,.12); brS = "border:none"; tcS = "color:" + bg;
+  } else if (B.style === "neon") {
+    bgS = "background:transparent"; brS = "border:2px solid " + bg; tcS = "color:" + bg;
+    extra = "text-shadow:0 0 8px " + bg + ";box-shadow:0 0 14px " + rgba(bg,.4) + ",inset 0 0 10px " + rgba(bg,.08);
+  } else if (B.style === "3d") {
+    bgS = "background:linear-gradient(135deg," + bg + "," + g2 + ")"; brS = "border:none"; tcS = "color:" + tc;
+    extra = "box-shadow:0 6px 0 " + rgba(bg,.5) + ",0 8px 12px " + rgba(bg,.25);
+    hov = "transform:translateY(3px);box-shadow:0 3px 0 " + rgba(bg,.5);
+  }
+
+  if (!hov) {
+    var sc = rgba(bg,.4);
+    var bxsh = sh > 0 ? "0 " + Math.round(sh*.4) + "px " + sh + "px " + sc : "none";
+    var hovMap = {
+      lift:   "transform:translateY(-3px);box-shadow:0 " + Math.round(sh*.6) + "px " + (sh+10) + "px " + sc,
+      glow:   "box-shadow:0 0 " + sh + "px " + sc + ",0 0 " + (sh*2) + "px " + rgba(bg,.15),
+      scale:  "transform:scale(1.05)",
+      pulse:  "animation:aPulse .6s ease infinite",
+      invert: "background:" + tc + ";color:" + bg,
+      none:   "opacity:.9"
+    };
+    hov = hovMap[B.hov] || "opacity:.9";
+  } else {
+    var bxsh = sh > 0 ? "0 " + Math.round(sh*.4) + "px " + sh + "px " + rgba(bg,.4) : "none";
+  }
+
+  var padMap = {sm:"8px 16px", md:"12px 24px", lg:"16px 32px", xl:"20px 40px"};
+  var fsMap  = {sm:"12px", md:parseInt(v.fsize)+"px", lg:"16px", xl:"18px"};
+  var pad = padMap[B.size] || "12px 24px";
+  var fs  = fsMap[B.size]  || "14px";
+  var lsS = parseFloat(v.ls) > 0 ? "letter-spacing:" + v.ls + "px" : "";
+  var wS  = B.wd === "full" ? "width:100%;display:block" : B.wd !== "auto" ? "width:" + B.wd : "";
+  var ttS = B.tt !== "none" ? "text-transform:" + B.tt : "";
+  var radS = "border-radius:" + v.radius + "px";
+
+  var parts = [bgS, brS, tcS, "padding:" + pad, "font-size:" + fs,
+    "font-weight:" + B.fw, radS, "cursor:pointer",
+    "font-family:'DM Mono',monospace",
+    "box-shadow:" + bxsh, "transition:all " + B.tr];
+  if (extra) parts.push(extra);
+  if (lsS)   parts.push(lsS);
+  if (wS)    parts.push(wS);
+  if (ttS)   parts.push(ttS);
+
+  return { style: parts.join(";"), hov: hov, pad: pad, fs: fs, bxsh: bxsh,
+           bgS: bgS, brS: brS, tcS: tcS, bg: bg, radS: radS };
+}
+
+function renderBtn() {
+  var v = getBtnVals();
+  var r = buildBtnInlineStyle(v);
+  var icon = B.ic !== "none" ? " " + B.ic : "";
+  var txt  = (document.getElementById("b-text").value || "Button") + icon;
+
+  // Live preview with hover style injected
+  document.getElementById("btn-live").innerHTML =
+    '<style>#lb:hover{' + r.hov + '}</style>'
+    + '<button id="lb" style="' + r.style + '">' + txt + '</button>';
+
+  // State previews
+  var states = [
+    {lbl:"Default",  extra:""},
+    {lbl:"Hover",    extra:";" + r.hov},
+    {lbl:"Disabled", extra:";opacity:.45;cursor:not-allowed"},
+    {lbl:"Focus",    extra:";outline:3px solid " + r.bg + ";outline-offset:3px"}
+  ];
+  document.getElementById("btn-states").innerHTML = states.map(function(s) {
+    return '<div class="state-item">'
+      + '<button style="' + r.style + s.extra + '">' + txt + '</button>'
+      + '<span class="state-lbl">' + s.lbl + '</span></div>';
+  }).join("");
+
+  document.getElementById("btn-info").textContent =
+    B.style + " \u00b7 " + B.size + " \u00b7 r=" + v.radius + "px";
+
+  buildBtnCodeOutput();
+}
+
+function getBtnCodeText() {
+  var v = getBtnVals();
+  var r = buildBtnInlineStyle(v);
+  var icon = B.ic !== "none" ? " " + B.ic : "";
+  var txt  = (document.getElementById("b-text").value || "Button") + icon;
+  var ls = parseFloat(v.ls) > 0 ? "\n  letter-spacing: " + v.ls + "px;" : "";
+  var wd = B.wd !== "auto" ? "\n  width: " + (B.wd === "full" ? "100%" : B.wd) + ";" : "";
+  var tt = B.tt !== "none" ? "\n  text-transform: " + B.tt + ";" : "";
+
+  return "<!-- HTML -->\n<button class=\"my-btn\">" + txt + "</button>\n\n"
+    + "/* CSS */\n.my-btn {\n"
+    + "  " + r.bgS + ";\n"
+    + "  " + r.brS + ";\n"
+    + "  " + r.tcS + ";\n"
+    + "  padding: " + r.pad + ";\n"
+    + "  font-size: " + r.fs + ";\n"
+    + "  font-weight: " + B.fw + ";\n"
+    + "  " + r.radS + ";\n"
+    + "  cursor: pointer;\n"
+    + "  font-family: 'DM Mono', monospace;\n"
+    + "  box-shadow: " + r.bxsh + ";\n"
+    + "  transition: all " + B.tr + ";"
+    + ls + wd + tt
+    + "\n}\n\n.my-btn:hover {\n  " + r.hov + ";\n}\n\n"
+    + ".my-btn:disabled {\n  opacity: 0.45;\n  cursor: not-allowed;\n}\n\n"
+    + ".my-btn:focus-visible {\n  outline: 3px solid " + r.bg + ";\n  outline-offset: 3px;\n}";
+}
+
+function buildBtnCodeOutput() {
+  var txt = getBtnCodeText();
+  document.getElementById("btn-pre").innerHTML = txt.split("\n").map(function(line) {
+    var s = xss(line);
+    if (line.indexOf("/*") === 0 || (line.length > 0 && line[0] === "."))
+      return '<span class="sk-kw">' + s + '</span>';
+    if (line.indexOf("<!-- ") === 0 || line.indexOf("<button") === 0)
+      return '<span class="sk-prop">' + s + '</span>';
+    if (line.trim() === "{" || line.trim() === "}")
+      return '<span class="sk-dim">' + s + '</span>';
+    if (line.indexOf(":") !== -1 && line.trim() !== "{" && line.trim() !== "}") {
+      var idx = line.indexOf(":");
+      return '<span class="sk-prop">' + xss(line.slice(0,idx)) + '</span>' + xss(line.slice(idx));
+    }
+    return s;
+  }).join("\n");
+}
+
+function copyBtnCode() {
+  navigator.clipboard.writeText(getBtnCodeText()).catch(function(){});
+  var b = document.getElementById("btn-copy-btn");
+  b.textContent = "\u2713 COPIED"; b.className = "cbtn cbtn-ok";
+  setTimeout(function(){ b.textContent = "\u2398 COPY"; b.className = "cbtn cbtn-cp"; }, 2000);
+}
+
+function downloadBtnCode() {
+  var txt = getBtnCodeText();
+  var parts = txt.split("/* CSS */");
+  var htmlPart = parts[0];
+  var cssPart  = parts[1] || "";
+  var full = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Button</title>'
+    + '<style>body{display:flex;align-items:center;justify-content:center;height:100vh;background:#F3E8FF;margin:0}'
+    + cssPart + '</style></head><body>' + htmlPart + '</body></html>';
+  var a = document.createElement("a");
+  a.href = "data:text/html;charset=utf-8," + encodeURIComponent(full);
+  a.download = "button.html";
+  a.click();
+}
+
+// ════════════════════════════════════════════════════
+//  CODE RUNNER
+// ════════════════════════════════════════════════════
+var STARTER = {
+  html: '<div class="card">\n  <h1>Hello World! \uD83D\uDC4B</h1>\n  <p>Edit HTML, CSS and JS \u2014 then click <strong>\u25B6 Run</strong></p>\n  <button onclick="greet()">Try me</button>\n</div>',
+  css:  "* { box-sizing: border-box; margin: 0; padding: 0; }\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: #F3E8FF;\n  font-family: 'DM Mono', monospace;\n}\n.card {\n  background: white;\n  border-radius: 16px;\n  padding: 40px;\n  box-shadow: 0 8px 32px rgba(124,58,237,.15);\n  text-align: center;\n  max-width: 400px;\n}\nh1 { font-size: 28px; color: #1e1033; margin-bottom: 12px; }\np { color: #6b4fa0; margin-bottom: 24px; }\nbutton {\n  padding: 12px 28px;\n  background: linear-gradient(135deg, #7C3AED, #A855F7);\n  border: none;\n  border-radius: 10px;\n  color: white;\n  font-size: 14px;\n  cursor: pointer;\n  transition: all .2s;\n}\nbutton:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(124,58,237,.4); }",
+  js:   "function greet() {\n  var btn = document.querySelector('button');\n  btn.textContent = '\u2756 You clicked me!';\n  btn.style.background = 'linear-gradient(135deg,#059669,#10b981)';\n}"
+};
+
+function initRunner() {
+  document.getElementById("ed-html").value = STARTER.html;
+  document.getElementById("ed-css").value  = STARTER.css;
+  document.getElementById("ed-js").value   = STARTER.js;
+  countLines("html"); countLines("css"); countLines("js");
+  runCode();
+}
+
+function countLines(lang) {
+  var ed = document.getElementById("ed-" + lang);
+  var ln = document.getElementById("ln-" + lang);
+  var n  = ed.value.split("\n").length;
+  ln.textContent = n + " line" + (n === 1 ? "" : "s");
+}
+
+function runCode() {
+  var html = document.getElementById("ed-html").value;
+  var css  = document.getElementById("ed-css").value;
+  var js   = document.getElementById("ed-js").value;
+  var doc  = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+    + '<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">'
+    + '<style>' + css + '</style></head><body>' + html
+    + '<scri' + 'pt>' + js + '</scri' + 'pt></body></html>';
+  document.getElementById("run-frame").srcdoc = doc;
+  var s = document.getElementById("run-status");
+  s.textContent = "Running\u2026";
+  s.style.cssText = "padding:4px 12px;font-size:10px;border-radius:16px;background:rgba(124,58,237,.1);border:1.5px solid var(--acc);color:var(--acc)";
+  setTimeout(function() {
+    s.textContent = "\u2713 Live";
+    s.style.cssText = "padding:4px 12px;font-size:10px;border-radius:16px;background:rgba(5,150,105,.1);border:1.5px solid #059669;color:#059669";
+  }, 400);
+}
+
+function clearCode() {
+  if (!confirm("Clear all three editors?")) return;
+  document.getElementById("ed-html").value = "";
+  document.getElementById("ed-css").value  = "";
+  document.getElementById("ed-js").value   = "";
+  countLines("html"); countLines("css"); countLines("js");
+  document.getElementById("run-frame").srcdoc =
+    "<body style='background:#F3E8FF;display:flex;align-items:center;justify-content:center;"
+    + "height:100vh;font-family:monospace;color:#6b4fa0'>Editors cleared.</body>";
+  var s = document.getElementById("run-status");
+  s.textContent = "Ready";
+  s.style.cssText = "";
+}
+
+function downloadRunCode() {
+  var html = document.getElementById("ed-html").value;
+  var css  = document.getElementById("ed-css").value;
+  var js   = document.getElementById("ed-js").value;
+  var doc  = '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n'
+    + '  <meta name="viewport" content="width=device-width,initial-scale=1">\n'
+    + '  <title>My Project</title>\n  <style>\n' + css + '\n  </style>\n</head>\n<body>\n'
+    + html + '\n<scri' + 'pt>\n' + js + '\n</scri' + 'pt>\n</body>\n</html>';
+  var a = document.createElement("a");
+  a.href = "data:text/html;charset=utf-8," + encodeURIComponent(doc);
+  a.download = "project.html";
+  a.click();
+}
+
+// Tab key support in editors
+document.querySelectorAll(".code-editor").forEach(function(ta) {
+  ta.addEventListener("keydown", function(e) {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      var s = ta.selectionStart, end = ta.selectionEnd;
+      ta.value = ta.value.substring(0,s) + "  " + ta.value.substring(end);
+      ta.selectionStart = ta.selectionEnd = s + 2;
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { runCode(); }
+  });
+});
+
+// ════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════
+injectKF();
+buildAllAnimControls();
+buildPreviewShape();
+animReplay();
+buildChainList();
+
+buildAllBtnControls();
+renderBtn();
+
+initRunner();
+</script>
+</body>
+</html>
